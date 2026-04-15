@@ -1,0 +1,680 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Samindra Herath | E-Portfolio</title>
+    <link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;700&display=swap" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="https://www.kali.org/images/favicon.ico">
+    <style>
+        /* Core Cyberpunk Palette */
+        :root {
+            --bg-color: #020602;
+            --main-green: #22ff22;
+            --dark-green: #008800;
+            --text-light: #d0ffd0;
+            --border-color: #00aa00;
+            --glow: 0 0 10px rgba(34, 255, 34, 0.5);
+            --font-sys: 'Fira Code', monospace;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            scroll-behavior: smooth;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            color: var(--text-light);
+            font-family: var(--font-sys);
+            font-size: 16px;
+            line-height: 1.6;
+            padding: 2rem;
+            max-width: 1000px;
+            margin: 0 auto;
+            position: relative;
+        }
+
+        /* Animated Matrix Canvas Background */
+        #matrix-bg {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            z-index: -2;
+            opacity: 0.15; /* Kept low so text is readable */
+        }
+
+        /* Subtle TV Scanline Effect Overlay */
+        body::after {
+            content: " ";
+            display: block;
+            position: fixed;
+            top: 0; left: 0; bottom: 0; right: 0;
+            background: linear-gradient(rgba(18, 16, 16, 0) 50%, rgba(0, 0, 0, 0.25) 50%);
+            z-index: -1;
+            background-size: 100% 4px;
+            pointer-events: none;
+        }
+
+        /* Typography & Headings */
+        h1, h2, h3 { color: var(--main-green); font-weight: normal; margin-bottom: 1rem; text-shadow: var(--glow); }
+        h2 { border-bottom: 1px dashed var(--border-color); padding-bottom: 0.5rem; margin-top: 2rem; display: inline-block;}
+        p { margin-bottom: 1.2rem; }
+        ul { margin-left: 2rem; margin-bottom: 1.5rem; list-style-type: square; }
+        strong { color: var(--main-green); font-weight: bold; }
+        
+        /* Links with Glitch Hover Effect */
+        a { color: var(--main-green); text-decoration: none; border-bottom: 1px solid transparent; transition: 0.3s;}
+        a:hover { 
+            background-color: var(--main-green); 
+            color: var(--bg-color); 
+            box-shadow: var(--glow);
+            letter-spacing: 1px;
+        }
+
+        /* Typewriter text cursor */
+        .cursor { display: inline-block; width: 10px; height: 1.2em; background-color: var(--main-green); vertical-align: bottom; animation: blinker 1s step-end infinite; }
+        @keyframes blinker { 50% { opacity: 0; } }
+        
+        .welcome-text { color: var(--main-green); font-weight: bold; margin-bottom: 1.5rem; min-height: 24px; }
+
+        /* Top Header Layout */
+        .top-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            flex-wrap: wrap;
+            margin-bottom: 2rem;
+            border: 1px solid var(--border-color);
+            padding: 1.5rem;
+            background: rgba(0, 20, 0, 0.6);
+            backdrop-filter: blur(5px);
+            box-shadow: inset 0 0 20px rgba(0, 255, 0, 0.1);
+        }
+
+        /* ASCII Art Animation */
+        .ascii-art {
+            color: var(--main-green);
+            font-size: 10px;
+            white-space: pre;
+            overflow-x: auto;
+            line-height: 1.1;
+            text-shadow: 0 0 5px var(--main-green);
+        }
+
+        /* Animated Scanner Photo Box */
+        .photo-container {
+            width: 150px; height: 180px;
+            border: 2px solid var(--main-green);
+            display: flex; align-items: center; justify-content: center;
+            text-align: center; font-size: 0.8rem;
+            color: var(--dark-green);
+            background: #000;
+            margin-left: 1rem;
+            position: relative;
+            overflow: hidden;
+            box-shadow: var(--glow);
+        }
+        /* The Laser Scanline */
+        .photo-container::after {
+            content: '';
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 2px;
+            background: var(--main-green);
+            box-shadow: 0 0 10px 2px var(--main-green);
+            animation: scan 3s linear infinite;
+        }
+        @keyframes scan {
+            0% { top: -5%; opacity: 0; }
+            10% { opacity: 1; }
+            90% { opacity: 1; }
+            100% { top: 105%; opacity: 0; }
+        }
+
+        /* Navigation Menu */
+        .main-menu {
+            border: 1px solid var(--border-color);
+            padding: 1rem; margin-bottom: 2rem;
+            display: flex; flex-wrap: wrap; gap: 1.5rem;
+            background: rgba(0, 20, 0, 0.6);
+        }
+        .main-menu span { color: var(--dark-green); animation: pulse 2s infinite; }
+        @keyframes pulse { 50% { opacity: 0.5; } }
+
+        /* Scroll Reveal Animation Classes */
+        .reveal {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease-out;
+        }
+        .reveal.active {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Content Boxes */
+        .content-block {
+            border-left: 2px solid var(--border-color);
+            padding-left: 1.5rem; margin-bottom: 2.5rem;
+            background: linear-gradient(90deg, rgba(0, 50, 0, 0.2) 0%, transparent 100%);
+            padding-top: 0.5rem; padding-bottom: 0.5rem;
+        }
+        .content-block:hover { border-left-color: var(--main-green); }
+
+        /* Skill Tags with Hover Animation */
+        .skill-tag {
+            display: inline-block;
+            border: 1px solid var(--dark-green);
+            padding: 0.4rem 0.8rem; margin: 0.3rem;
+            font-size: 0.9rem;
+            background: rgba(0, 20, 0, 0.8);
+            transition: all 0.3s ease;
+            cursor: default;
+        }
+        .skill-tag:hover {
+            border-color: var(--main-green);
+            color: var(--bg-color);
+            background: var(--main-green);
+            transform: scale(1.05);
+            box-shadow: var(--glow);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .top-header { flex-direction: column; align-items: center; text-align: center; }
+            .ascii-art { font-size: 6px; margin-bottom: 1rem; }
+            .photo-container { margin-left: 0; margin-top: 1rem; }
+            body { padding: 1rem; }
+        }
+    </style>
+</head>
+<body>
+
+    <canvas id="matrix-bg"></canvas>
+
+    <div class="welcome-text"><span id="typewriter"></span><span class="cursor"></span></div>
+
+    <div class="top-header reveal">
+        <div class="ascii-art">
+  _____                 _           _              _    _                 _   _     
+ / ____|               (_)         | |            | |  | |               | | | |    
+| (___   __ _ _ __ ___  _ _ __   __| |_ __ __ _   | |__| | ___ _ __ __ _ | |_| |__  
+ \___ \ / _` | '_ ` _ \| | '_ \ / _` | '__/ _` |  |  __  |/ _ \ '__/ _` || __| '_ \ 
+ ____) | (_| | | | | | | | | | | (_| | | | (_| |  | |  | |  __/ | | (_| || |_| | | |
+|_____/ \__,_|_| |_| |_|_|_| |_|\__,_|_|  \__,_|  |_|  |_|\___|_|  \__,_| \__|_| |_|
+        </div>
+        
+        <div class="photo-container">
+            <img src="profile-t2.png" alt="Samindra Herath" style="width: 100%; height: 100%; object-fit: cover;">
+        </div>
+    </div>
+
+    <div class="main-menu reveal">
+        <span>[ MAIN MENU ]</span>
+        <a href="#intro">> 1. Introduction</a>
+        <a href="#about">> 2. About Me</a>
+        <a href="#projects">> 3. Projects</a>
+        <a href="#skills">> 4. Skills</a>
+        <a href="#experience">> 5. Experience</a>
+        <a href="#research">> 6. Research & Academic</a>
+        <a href="#certifications">> 7. Certifications</a>
+        <a href="#achievements">> 8. Achievements  </a>
+        <a href="#reflections">> 9. Reflections</a>
+        <a href="#goals">> 10. Goals & Future Development</a>
+        <a href="#contact">> 11. Contact Information</a>
+    </div>
+
+    <section id="intro" class="reveal">
+        <h2>[ 1. Introduction ]</h2>
+        <div class="content-block">
+            <p><strong>Name:</strong> Samindra Herath</p>
+            <p><strong>Student Number:</strong> CT/2022/058</p>
+            <p><strong>Degree Program:</strong> Bachelor of Information and Communication Technology (BICT)</p>
+            <p><strong>Faculty:</strong> Faculty of Computing and Technology</p>
+            <p><strong>University:</strong> University of Kelaniya</p>
+            <br>
+            <p><strong>Tagline:</strong> <em>Aspiring Network & Cybersecurity Engineer | Tech & Audio Enthusiast</em></p>
+            <p><strong>Short Bio:</strong> I am a twenty-one year old undergraduate living in Kandy, Sri Lanka, where I am constantly exploring the dynamic world of technology. I am endlessly fascinated by the architecture of digital networks and fiercely driven to protect them from modern cyber threats. However, my life is not just about code and cybersecurity. As the Head of Music for the FCT Music Band, my creative side is equally important. I absolutely love audio engineering and playing instruments, especially the guitar and drums. To balance everything out, you will also frequently find me training hard with the university Taekwondo team every week.</p>
+        </div>
+    </section>
+
+    <section id="about" class="reveal">
+        <h2>[ 2. About Me ]</h2>
+        <div class="content-block">
+            <p><strong>Educational Background:</strong><br>
+            My academic journey started at Nugawela Central College, where I completed my A/L exams. Currently, I am in my second year of the BICT program at the University of Kelaniya's Faculty of Computing and Technology, focusing heavily on Network Security.So far, my degree has been an incredible deep dive into the architecture of digital systems.</p>
+            
+            <p><strong>My Interests:</strong></p>
+            <ul>
+                <li><strong>Technology:</strong> Network security, finding vulnerabilities in computer systems (Penetration testing), Audio engineering and Software-Defined Networking.</li><br>
+                <li><strong>Hobbies:</strong> live sound Engineering(setting up audio mixers and speakers for concerts and exploring the physics behind it), playing drums and guitar, practicing Taekwondo, doing workout , and learning how the brain processes information and react.</li>
+            </ul>
+
+            <p><strong>Career Goals:</strong><br>
+            I want to build a career as a Network Security Architect, helping organizations protect their digital information while finding creative solutions to difficult technical problems.</p>
+        </div>
+    </section>
+
+    <section id="projects" class="reveal">
+        <h2>[ 3. Academic Projects ]</h2>
+        
+        <div class="content-block">
+            <h3>Project 1: SDN-Based Multi-Honeypot Orchestrator with LLM-Powered Cross-Protocol Context Memory</h3>
+            <p><strong>Course/Module:</strong>GTEC 23032 Project in Technology</p>
+            <p><strong>My Role:</strong> Lead Developer and Architect</p>
+            <p><strong>Tools Used:</strong> Python, Software-Defined Networking, Linux, Ollama , Docker , Mininet.</p>
+            <p><strong>Description:</strong> I led the development of an intelligent cybersecurity defense network. A "honeypot" is essentially a digital trap used to lure and study hackers. Traditionally, these traps are isolated—an SSH trap has no idea if the Web server is also under attack.Over a 5-month timeline, we fixed this by building a centralized "Brain" in Python that connects SSH, Web, and FTP traps. We deployed the infrastructure using Mininet and Docker, used Redis to give the system cross-protocol memory, and integrated Llama 3 to analyze attacker intent. When a threat is confirmed, a Ryu SDN controller automatically blocks the attacker on the network.</p>
+        </div>
+
+        <div class="content-block">
+            <h3>Project 2: Mr.Care</h3>
+            <p><strong>Course/Module:</strong> GTEC 13032  Projects In Technology</p>
+            <p><strong>My Role:</strong> Technical Lead</p>
+            <p><strong>Tools Used:</strong> Python , Open CV , Arduino, C# ,JAVA</p>
+            <p><strong>Description:</strong> Our final product was to developed a smart wearable wristband designed to continuously monitor critical vital signs, including heart rate, blood pressure, and blood oxygen levels. Then we feed it in real time into a custom AI model trained to recognize the early warning signs of a heart attack. If the system predicts an imminent cardiac event, it automatically sends an alert to nearby hospitals and emergency medical services.</p>
+        </div>
+
+        <div class="content-block">
+            <h3>Project 3: RGMS - (Research Grant Management System)</h3>
+            <p><strong>Course/Module:</strong> External project for university research and publication division</p>
+            <p><strong>My Role:</strong> BA & QA</p>
+            <p><strong>Tools Used:</strong> Jira , Mira , Bizagi ,Tail scale</p>
+            <p><strong>Description:</strong> Built by FCT Technologies, RGMS is a centralized management platform designed to organize data and streamline administrative tasks. We built it to replace scattered manual processes with a single, unified hub. The system features a secure database, an intuitive user interface, and automated workflow tracking, giving teams a practical and straightforward tool to manage their day to day operations efficiently.</p>
+        </div>
+
+          <div class="content-block">
+            <h3>Project 4: Cardboard Prosthetic Hand</h3>
+            <p><strong>Course/Module:</strong> GTEC 12033 - Fundamental Practices in Technology</p>
+            <p><strong>My Role:</strong> Structural Designer & QA </p>
+            <p><strong>Tools Used:</strong> Blender</p>
+            <p><strong>Description:</strong> An affordable, mechanical prosthetic hand prototype designed using sustainable cardboard.I was responsible for defining the requirements for hand mobility and conducting usability testing on the mechanical linkages to ensure a reliable grip for users.</p>
+        </div>
+    </section>
+
+    <section id="skills" class="reveal">
+        <h2>[ 4. Technical Skills ]</h2>
+        <div class="content-block">
+            <p><strong>Programming Languages</strong></p>
+            <div style="margin-bottom: 1.5rem;">
+                <span class="skill-tag">Python</span>
+                <span class="skill-tag">C/C++</span>
+                <span class="skill-tag">PHP</span>
+                <span class="skill-tag">Redis</span>
+                <span class="skill-tag">Java</span>
+                <span class="skill-tag">Ruby</span>
+                <span class="skill-tag">Postgresql</span>
+                <span class="skill-tag">mysql</span>
+                <span class="skill-tag">JavaScript</span>
+            </div>
+
+            <p><strong>Networking & Security</strong></p>
+            <div style="margin-bottom: 1.5rem;">
+                <span class="skill-tag">Vulnerability Testing (Metasploit)</span>
+                <span class="skill-tag">Vulnerability Assessment (Nessus, OpenVAS)</span>
+                <span class="skill-tag">Network Analysis (Wireshark)</span>
+                <span class="skill-tag">Network Scanning & Enumeration (Nmap, Masscan)</span>
+                <span class="skill-tag">Docker Handling</span>
+                <span class="skill-tag">Wireless Security (Aircrack-ng, WPA2/WPA3 auditing)</span>
+            </div>
+
+            <p><strong>Engineering / Hardware Skills</strong></p>
+            <div>
+                <span class="skill-tag">Live Audio Mixing</span>
+                <span class="skill-tag">Computer Troubleshooting</span>
+                <span class="skill-tag">Event Coordination</span>
+                <span class="skill-tag">Quality Assurance </span>
+                <span class="skill-tag">Linux Troubleshooting </span>
+            </div>
+        </div>
+    </section>
+
+   <section id="experience" class="reveal">
+        <h2>[ 5. Leadership Experience & University Life ]</h2>
+        <div class="content-block">
+            <p><strong>Industry Exposure:</strong><br>
+            I was selected for a Business Analyst (BA) and Network Administrator (NA) position for an external university project handling by FCT Technologies, which taught me how to communicate technical ideas to business teams. And network essential when dealing with application hosting and maintaining 
+            </p>
+
+            <p style="margin-top: 2rem;"><strong>Clubs & Leadership:</strong></p>
+            <ul style="list-style-type: none; margin-left: 0;">
+                
+                <li style="margin-bottom: 1.8rem;">
+                    <strong style="font-size: 1.1em;">[ AIESEC ]</strong>
+                    <div style="color: var(--dark-green); font-size: 0.9em; margin: 0.3rem 0 0.8rem 0;">
+                        > Skills developed: <span style="color: var(--text-light);">Leadership, Teamwork, Communication, Social skills</span>
+                    </div>
+                    <ul style="margin-bottom: 0;">
+                        <li>I helped create promotional materials for their global volunteering programs.</li>
+                        <li>Act as a Organizing committee Vice President (OCVP) in marketing at winter induction 2025 event</li>
+                        <li>Former CXP team member</li>
+                    </ul>
+                </li>
+                
+                <li style="margin-bottom: 1.8rem;">
+                    <strong style="font-size: 1.1em;">[ FCT Music Band ]</strong>
+                    <div style="color: var(--dark-green); font-size: 0.9em; margin: 0.3rem 0 0.8rem 0;">
+                        > Skills developed: <span style="color: var(--text-light);">Leadership, Teamwork</span>
+                    </div>
+                    <ul style="margin-bottom: 0;">
+                        <li>As Head of Music, I direct both the musicians and manage the complex technical sound setups for events.</li>
+                    </ul>
+                </li>
+                
+                <li style="margin-bottom: 1.8rem;">
+                    <strong style="font-size: 1.1em;">[ Legion Society ]</strong>
+                    <div style="color: var(--dark-green); font-size: 0.9em; margin: 0.3rem 0 0.8rem 0;">
+                        > Skills developed: <span style="color: var(--text-light);">Leadership, Teamwork, Technical</span>
+                    </div>
+                    <ul style="margin-bottom: 0;">
+                        <li>I serve as an Executive Member, helping to organize and run faculty events smoothly.</li>
+                    </ul>
+                </li>
+                
+                <li style="margin-bottom: 1.8rem;">
+                    <strong style="font-size: 1.1em;">[ FOSS Community ]</strong>
+                    <div style="color: var(--dark-green); font-size: 0.9em; margin: 0.3rem 0 0.8rem 0;">
+                        > Skills developed: <span style="color: var(--text-light);">Teamwork, Technical</span>
+                    </div>
+                    <ul style="margin-bottom: 0;">
+                        <li>Active member and Participated in regular meetings and group activities.</li>
+                    </ul>
+                </li>
+                
+                <li style="margin-bottom: 1.8rem;">
+                    <strong style="font-size: 1.1em;">[ ISACA ]</strong>
+                    <div style="color: var(--dark-green); font-size: 0.9em; margin: 0.3rem 0 0.8rem 0;">
+                        > Skills developed: <span style="color: var(--text-light);">Teamwork, Leadership</span>
+                    </div>
+                    <ul style="margin-bottom: 0;">
+                        <li>Active member and Participated in regular meetings and group activities.</li>
+                    </ul>
+                </li>
+                
+                <li style="margin-bottom: 1.8rem;">
+                    <strong style="font-size: 1.1em;">[ Taekwondo Team ]</strong>
+                    <div style="color: var(--dark-green); font-size: 0.9em; margin: 0.3rem 0 0.8rem 0;">
+                        > Skills developed: <span style="color: var(--text-light);">Leadership, Teamwork, Fighting</span>
+                    </div>
+                    <ul style="margin-bottom: 0;">
+                        <li>I am an active athlete and also designed the promotional and recruitment flyers for the team.</li>
+                    </ul>
+                </li>
+            </ul>
+        </div>
+    </section>
+
+
+<section id="research" class="reveal">
+        <h2>[ 6. Research & Academic Engagement ]</h2>
+        
+        <p style="margin-bottom: 2rem; color: var(--dark-green); border-left: 2px solid var(--dark-green); padding-left: 1rem;">
+            <em>> System Log: Tracking academic exposure and knowledge acquisition beyond standard parameters...</em>
+        </p>
+
+        <div class="content-block">
+            <h3>[ Event 01: FCTSRS Participation ]</h3>
+            <div style="margin-bottom: 1rem; font-size: 0.95em;">
+                <p style="margin-bottom: 0.3rem;"><strong>Type:</strong> <span style="color: var(--text-light);">Student Research Symposium</span></p>
+                <p style="margin-bottom: 0.3rem;"><strong>Organizer:</strong> <span style="color: var(--text-light);">Faculty of Computing and Technology, University of Kelaniya</span></p>
+                <p style="margin-bottom: 0.3rem;"><strong>Date:</strong> <span style="color: var(--text-light);">October 2025</span></p>
+                <p style="margin-bottom: 0.3rem;"><strong>Role:</strong> <span style="color: var(--text-light);">Participant</span></p>
+            </div>
+            <p style="margin-bottom: 0;"><strong>Key Learnings:</strong></p>
+            <ul style="margin-top: 0.5rem; margin-bottom: 0; color: var(--text-light);">
+                <li><em>Gained exposure to advanced academic research methodologies in modern computing.</em></li>
+                <li><em>Found interresting topic and new technology pathways to follow.</em></li>
+                <li><em> Learn about how research should be done , how to find a solution for a problem. </em></li>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <h3>[ Event 02: Linux Workshop ]</h3>
+            <div style="margin-bottom: 1rem; font-size: 0.95em;">
+                <p style="margin-bottom: 0.3rem;"><strong>Type:</strong> <span style="color: var(--text-light);">Technical Workshop</span></p>
+                <p style="margin-bottom: 0.3rem;"><strong>Organizer:</strong> <span style="color: var(--text-light);">FOSS Community</span></p>
+                <p style="margin-bottom: 0.3rem;"><strong>Date:</strong> <span style="color: var(--text-light);">December 2025</span></p>
+                <p style="margin-bottom: 0.3rem;"><strong>Role:</strong> <span style="color: var(--text-light);">Participant</span></p>
+            </div>
+            <p style="margin-bottom: 0;"><strong>Key Learnings:</strong></p>
+            <ul style="margin-top: 0.5rem; margin-bottom: 0; color: var(--text-light);">
+                <li><em>Enhanced practical understanding of linux systems.</em></li>
+                <li><em>Learn about linux CLI tricks and tips.</em></li>
+                <li><em>Learn about how system architecture inside linux is functioning. </em></li>
+            </ul>
+        </div>
+
+          <div class="content-block">
+            <h3>[ Event 03: Docker Workshop ]</h3>
+            <div style="margin-bottom: 1rem; font-size: 0.95em;">
+                <p style="margin-bottom: 0.3rem;"><strong>Type:</strong> <span style="color: var(--text-light);">Technical Workshop</span></p>
+                <p style="margin-bottom: 0.3rem;"><strong>Organizer:</strong> <span style="color: var(--text-light);">FOSS Community</span></p>
+                <p style="margin-bottom: 0.3rem;"><strong>Date:</strong> <span style="color: var(--text-light);">February 2026</span></p>
+                <p style="margin-bottom: 0.3rem;"><strong>Role:</strong> <span style="color: var(--text-light);">Participant</span></p>
+            </div>
+            <p style="margin-bottom: 0;"><strong>Key Learnings:</strong></p>
+            <ul style="margin-top: 0.5rem; margin-bottom: 0; color: var(--text-light);">
+                <li><em>Learn about what is docker and why it's useful.</em></li>
+                <li><em>How to create a perfect docker environment. </em></li>
+                <li><em>Advance hosting features. </em></li>
+            </ul>
+        </div>
+
+        </section>
+
+
+<section id="certifications" class="reveal">
+        <h2>[ 7. Certifications & Courses ]</h2>
+        
+        <p style="margin-bottom: 2rem; color: var(--dark-green); border-left: 2px solid var(--dark-green); padding-left: 1rem;">
+            <em>> System Log: Verifying external credentials, specialized training, and skill augmentations...</em>
+        </p>
+
+        <div class="content-block">
+            <h3>[ Online Certifications ]</h3>
+            <ul style="color: var(--text-light);">
+                <li><strong>Cisco Linux essential</strong> - <em>Cisco Netcad (2026)</em><br>
+                <span style="font-size: 0.9em; color: var(--dark-green);">> Focus: Linux basics , CLI mastering , Linux os
+                <li style="margin-top: 0.8rem;"><strong>AI/ML Engineer Stage 1 and Stage 2</strong> - <em>SLIIT (2025)</em><br>
+                <span style="font-size: 0.9em; color: var(--dark-green);">> Focus: Studied machine learning algorithms and neural networks. Applied data preprocessing techniques. Evaluated model accuracy</span></li>
+                <li style="margin-top: 0.8rem;"><strong>Python For Begineers</strong> - <em>University of Moratuwa (2024)</em><br>
+                <span style="font-size: 0.9em; color: var(--dark-green);">> Focus: conducted by department of computer engineering, University of Moratuwa. Learn python basics to advance coding</span></li>
+                <li style="margin-top: 0.8rem;"><strong>Oracle WebLogic for Administrators</strong> - <em>Oracle (2025)</em><br>
+                <span style="font-size: 0.9em; color: var(--dark-green);">> Focus: Installed and configured Oracle WebLogic Server environments. Managed domains and server instances. </span></li>
+                <li style="margin-top: 0.8rem;"><strong>Master Course in Artificial Intelligence & Deep Learning 3.0</strong> - <em>Udemy (2024)</em><br>
+                <span style="font-size: 0.9em; color: var(--dark-green);">> Focus: Deep learning , NLP , AGI , NLP Architecture </span></li>
+            </ul>
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <h3>[ Workshops ]</h3>
+            <ul style="color: var(--text-light);">
+                <li><strong>Docker Workshop</strong> - <em>FOSS Community 2026</em><br>
+                <span style="font-size: 0.9em; color: var(--dark-green);">> Focus: Set up docker environment , Docker handling , Docker commands , Docker compose.</span></li>
+            </ul>
+              <ul style="color: var(--text-light);">
+                <li><strong>Linux Workshop</strong> - <em>FOSS Community 2025</em><br>
+                <span style="font-size: 0.9em; color: var(--dark-green);">> Focus: UNIX , Linux Fundamental , CLI , Kernal & OS , File handling & Management.</span></li>
+            </ul>
+        </div>
+    </section>
+
+
+    <section id="achievements" class="reveal">
+        <h2>[ 8. Achievements & Extracurricular Activities related to University Life ]</h2>
+
+        <div class="content-block">
+            <h3>[ Competitions & Awards ]</h3>
+            <ul style="color: var(--text-light);">
+                <li><strong>Sri Lanka University Games (SLUG) 2025</strong><br>
+                Selected for the university Taekwondo team, representing the institution in high-level inter-university martial arts competition.</li>
+                
+            </ul>
+        </div>
+
+        <div class="content-block">
+            <h3>[ Volunteering ]</h3>
+            <ul style="color: var(--text-light);">
+                <li><strong>AIESEC Executive Volunteer</strong><br>
+                Served as the Organizing Committee Vice President (OCVP) for Marketing during the Winter Induction 2025 event, handling promotional strategy and global volunteering program materials.</li>
+                
+                <li style="margin-top: 0.8rem;"><strong>Legion Society Executive Member</strong><br>
+                Helped organize and execute various faculty events, ensuring smooth operational workflows and community engagement.</li>
+            </ul>
+        </div>
+
+    </section>
+
+
+    <section id="reflections" class="reveal">
+        <h2>[ 9. Personal Reflections ]</h2>
+        
+        <div class="content-block">
+            <h3>Reflection 1: RGMS Development and Quality Assurance</h3>
+            <p><em>Developing the RGMS platform with FCT Technologies has been a vital part of my university experience, especially in understanding theoretical software life cycles through practical application. Working as both a Business Analyst and Quality Assurance specialist allowed me to gain significant hands-on experience with requirement gathering and system testing.<br><br>
+
+                Through these activities, I learned how to translate complex business needs into technical specifications and follow proper procedures for software validation. I also developed a better understanding of technical accuracy and how to maintain high standards of reliability throughout the development process.<br><br>
+
+                One challenge I faced was discovering requirement gaps regarding resource tracking mid-way through the project. While managing these missing requirements was initially complex, I learned that proactive thinking and thorough initial analysis are essential for maintaining a project's momentum and avoiding frustration.</em></p>
+        </div>
+
+        <div class="content-block">
+            <h3>Reflection 2: Leadership and Growth in AIESEC</h3>
+            <p><em> Serving as the Organizing Committee Vice President (OCVP) for Marketing during the Winter Induction was a transformative period in my AIESEC career. This role required me to bridge the gap between creative outreach strategies and the operational needs of a large-scale event.<br><br>
+
+            Through this experience, I learned how to handle the complexities of marketing management while maintaining a strict timeline. Most importantly, I gained significant confidence by leading a team through challenges and seeing the direct impact of our campaigns on the induction's success.</em></p>
+        </div>
+
+        <div class="content-block">
+            <h3>Reflection 3: Balancing Academic Excellence and Sport</h3>
+            <p><em>Managing my university academic life alongside my commitment to Taekwondo has been a defining part of my undergraduate experience. As a BICT student at FCT. I have had to balance a demanding technical degree with the physical intensity of sports. Being selected for the SLUG 2025 team was a significant milestone that required me to apply the same level of dedication to my training as I do to my studies.<br><br>
+
+            Through these activities, I learned that the discipline required on the mat is remarkably similar to the technical accuracy needed in my field. I developed a much better understanding of how to prioritize my time and energy to maintain high performance in both areas. This experience reinforced the idea that success in complex technical environments often depends on the resilience and mental focus built through consistent practice.<br><br>
+
+            One significant challenge I faced was managing the physical exhaustion and competition pressure that came with preparing for a major inter university tournament. It was often difficult to maintain the mental stamina required for complex coding and assignments after hours of intense training sessions. However, navigating these hurdles helped me develop critical thinking, as I had to look ahead at my academic deadlines and plan my rest and study periods much more strategically.<br><br>
+
+            To address these challenges, I implemented a structured daily routine that prioritized recovery and focused study blocks. In the future, I aim to continue refining my time management skills and use the proactive mindset I've gained to handle high-pressure situations in my professional career more efficiently.</em></p>
+        </div>
+    </section>
+
+
+<section id="goals" class="reveal">
+        <h2>[ 10. Career Goals & Future Development ]</h2>
+        <div class="content-block">
+            <p><strong>Short-Term Goals:</strong></p>
+            <ul>
+                <li>Complete second-year projects (SDN Orchestrator With Cross-Protocol Context Memory).</li>
+                <li>Excel in Network Administrative within FCT Technologies.</li>
+                <li>Acquire industry-recognized certifications like CCNA or CompTIA Security+.</li>
+            </ul>
+
+            <p><strong>Long-Term Goals:</strong></p>
+            <ul>
+                <li>Advance to the role of a Network Security Architect.</li>
+                <li>Design secure, large-scale network infrastructures for global enterprises.</li>
+                <li>To do a Live sound engineering degree.</li>
+            </ul>
+
+            <p><strong>Skills to be Developed:</strong></p>
+            <ul>
+                <li>Digital Forensics</li>
+                <li>Advanced Network Security</li>
+                <li>Professional Audio Engineering</li>
+            </ul>
+        </div>
+    </section>
+
+    <section id="contact" class="reveal">
+        <h2>[ 11. Contact Information ]</h2>
+        <div class="content-block">
+            <p><strong>Get in Touch:</strong></p>
+            <ul>
+                <li><strong>Email:</strong> <a href="mailto:herathh-ct22058@stu.kln.ac.lk">herathh-ct22058@stu.kln.ac.lk</a></li>
+                <li><strong>LinkedIn:</strong> <a href="https://www.linkedin.com/in/samindra-herath-4b06ab26b" target="_blank">samindra-herath</a></li>
+                <li><strong>GitHub:</strong> <a href="https://github.com/Samindra-Herath" target="_blank">Samindra-Herath</a></li>
+            </ul>
+        </div>
+    </section>
+
+
+    <p style="text-align: center; color: var(--dark-green); margin-top: 4rem; margin-bottom: 2rem; animation: pulse 2s infinite;">
+        End of E-Portfolio.
+    </p>
+
+
+    <script>
+        // 1. TYPEWRITER EFFECT
+        const textToType = "Loading System Data... Decrypting User Portfolio... Access Granted.";
+        const typeTarget = document.getElementById("typewriter");
+        let i = 0;
+        function typeWriter() {
+            if (i < textToType.length) {
+                typeTarget.innerHTML += textToType.charAt(i);
+                i++;
+                setTimeout(typeWriter, 50); // Speed of typing
+            }
+        }
+        window.onload = typeWriter;
+
+        // 2. SCROLL REVEAL EFFECT
+        function reveal() {
+            var reveals = document.querySelectorAll(".reveal");
+            for (var j = 0; j < reveals.length; j++) {
+                var windowHeight = window.innerHeight;
+                var elementTop = reveals[j].getBoundingClientRect().top;
+                var elementVisible = 100; // when to trigger reveal
+                
+                if (elementTop < windowHeight - elementVisible) {
+                    reveals[j].classList.add("active");
+                }
+            }
+        }
+        window.addEventListener("scroll", reveal);
+        reveal(); // Trigger once on load
+
+        // 3. MATRIX RAIN CANVAS BACKGROUND
+        const canvas = document.getElementById('matrix-bg');
+        const ctx = canvas.getContext('2d');
+        
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        
+        const characters = '01ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789@#$%^&*';
+        const fontSize = 14;
+        const columns = canvas.width / fontSize;
+        const drops = [];
+        
+        for(let x = 0; x < columns; x++) { drops[x] = 1; }
+        
+        function drawMatrix() {
+            // Translucent black to create fading effect
+            ctx.fillStyle = 'rgba(2, 6, 2, 0.05)';
+            ctx.fillRect(0, 0, canvas.width, canvas.height);
+            
+            ctx.fillStyle = '#0F0'; // Green text
+            ctx.font = fontSize + 'px monospace';
+            
+            for(let i = 0; i < drops.length; i++) {
+                const text = characters.charAt(Math.floor(Math.random() * characters.length));
+                ctx.fillText(text, i * fontSize, drops[i] * fontSize);
+                
+                // Randomly reset drops to top
+                if(drops[i] * fontSize > canvas.height && Math.random() > 0.975) {
+                    drops[i] = 0;
+                }
+                drops[i]++;
+            }
+        }
+        // Resize canvas if window changes
+        window.addEventListener('resize', () => {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        });
+        
+        setInterval(drawMatrix, 50); // Speed of matrix falling
+    </script>
+</body>
+</html>
